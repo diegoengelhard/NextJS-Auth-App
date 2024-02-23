@@ -14,8 +14,7 @@ const UserSchema = new Schema({
         type: String,
         required: [true, "Please enter an email"],
         unique: [true, 'Email must be unique'],
-        trim: true,
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please enter a valid email']
+        trim: true
     },
     password: {
         type: String,
@@ -43,4 +42,5 @@ const UserSchema = new Schema({
     },
 }, { timestamps: true });
 
-export default mongoose.model("User", UserSchema);
+const User = mongoose.models.User || mongoose.model('User', UserSchema);
+export default User;
