@@ -1,7 +1,16 @@
 import React, { useState } from 'react'
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 const SignIn = () => {
+    const router = useRouter();
+
+    // Set states
+    const [user, setUser] = useState({
+        email: '',
+        password: ''
+    });
     const [loading, setLoading] = useState(false);
 
     return (

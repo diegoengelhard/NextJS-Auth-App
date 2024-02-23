@@ -40,6 +40,9 @@ export async function POST(request: NextRequest) {
         // Save new user
         await newUser.save();
 
+        // Log new user
+        console.log('New user created:', newUser);
+
         // Return success message
         return NextResponse.json({ message: 'User created', user: newUser }, { status: 201 });
     } catch (error: any) {
