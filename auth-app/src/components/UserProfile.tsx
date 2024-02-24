@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation';
 import Link from "next/link";
 import axios from "axios";
@@ -11,20 +11,90 @@ const UserProfile = () => {
     console.log(params.id);
 
     const router = useRouter()
-    const [data, setData] = useState("")
+    const [data, setData] = useState({
+        email: '',
+        username: '',
+        isAdmin: false,
+        isVerified: false
+    });
+    const [loading, setLoading] = useState(false);
 
-    const getUserDetails = async () => {
-        const res = await axios.get(`/api/profile/${params.id}`)
-        console.log('user data', res.data);
-        // setData(res.data.data._id)
-    }
+    useEffect(() => {
+        const fetchData = async () => {
+          setLoading(true);
+          const res = await axios.get(`/api/profile/${params.id}`);
+          setData(res.data.user);
+          setLoading(false);
+        };
+    
+        fetchData();
+      }, [params.id]);
+    
+      if (loading) {
+        return <div className='flex flex-col items-center justify-center min-h-screen py-2'>
+            Loading...
+        </div>;
+      }
+
+      // Handle Sign Out function
 
 
     return (
-       <>
-            <div>UserProfile {params.id}</div>
-            <button onClick={getUserDetails}>get user</button>
-       </>
+        <>
+            <div className="flex flex-col items-center justify-center min-h-screen py-2">
+                <h1 className="text-5xl font-bold">User Profile</h1>
+                {/* Show user data */}
+                 <div className="w-full max-w-md mt-4">
+                    <div className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'>
+                        <div className="my-4 flex" >
+                            <div className="block text-gray-700 text-sm font-bold mb-2" >
+                                Email:&nbsp;
+                            </div>
+                            <div className="block text-gray-700 text-sm mb-2" >
+                                {data.email}
+                            </div>
+                        </div>
+                        <hr />
+                        <div className="my-4 flex">
+                            <div className="block text-gray-700 text-sm font-bold mb-2" >
+                                Username:&nbsp;
+                            </div>
+                            <div className="block text-gray-700 text-sm mb-2" >
+                                {data.username}
+                            </div>
+                        </div>
+                        <hr />
+                        <div className="my-4 flex">
+                            <div className="block text-gray-700 text-sm font-bold mb-2" >
+                                Admin Status:&nbsp;
+                            </div>
+                            <div className="block text-gray-700 text-sm mb-2" >
+                                {data.isAdmin ? 'Yes' : 'No'}
+                            </div>
+                        </div>
+                        <hr />
+                        <div className="my-4 flex">
+                            <div className="block text-gray-700 text-sm font-bold mb-2" >
+                                Verified Status:&nbsp;
+                            </div>
+                            <div className="block text-gray-700 text-sm mb-2" >
+                                {data.isVerified ? 'Yes' : 'No'}
+                            </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <button
+                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                type="button"
+                                onClick={() => router.push('/')}
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                 </div>
+
+            </div>
+        </>
     )
 }
 

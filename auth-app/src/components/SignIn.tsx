@@ -25,6 +25,7 @@ const SignIn = () => {
             // Send POST request to API route
             const response = await axios.post('/api/auth/signin', user);
             console.log(response.data);
+            const userId = response.data.user._id;
 
             // Set loading to false
             setLoading(false);
@@ -33,7 +34,7 @@ const SignIn = () => {
             toast.success('Sign in successful!');
 
             // Redirect to dashboard
-            router.push('/');
+            router.push(`/profile/${userId}`);
         } catch (error: any) {
             // Log error
             console.error(error);
