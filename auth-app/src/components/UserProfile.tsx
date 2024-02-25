@@ -40,9 +40,9 @@ const UserProfile = () => {
       // Handle Sign Out function
     const handleSignOut = async () => {
         try {
-            // Send POST request to API route
-            // const response = await axios.post('/api/auth/signout');
-            // console.log(response.data);
+            // Send GET request to API route
+            const response = await axios.get('/api/auth/signout');
+            console.log(response.data);
 
             // Show success message
             toast.success('Sign out successful!');
