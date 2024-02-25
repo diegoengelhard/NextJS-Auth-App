@@ -6,8 +6,8 @@ export function middleware(request: NextRequest, response: NextResponse) {
 
     // // Get the token from the request cookies
     const token = request.cookies.get('token')?.value || '';
-    console.log('token: ', token);
     const userId = request.cookies.get('userId')?.value || '';
+    console.log('token: ', token);
     console.log('userId: ', userId);
 
     if (publicPath && token) {
@@ -17,11 +17,6 @@ export function middleware(request: NextRequest, response: NextResponse) {
     if (!publicPath && !token) {
         return NextResponse.redirect(new URL('/signin', request.nextUrl))
     }
-
-    // // If no token and no userId, redirect to signin
-    // if (!token && !userId) {
-    //     return NextResponse.redirect(new URL('/signin', request.url));
-    // }
 }
 
 export const config = {

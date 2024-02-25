@@ -24,11 +24,7 @@ const SignIn = () => {
 
             // Send POST request to API route
             const response = await axios.post('/api/auth/signin', user);
-            console.log(response.data);
-            console.log('token: ',response.data.token);
             const userId = response.data.user._id;
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('userId', userId);
 
             // Set loading to false
             setLoading(false);

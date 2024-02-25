@@ -41,8 +41,7 @@ const UserProfile = () => {
     const handleSignOut = async () => {
         try {
             // Send GET request to API route
-            const response = await axios.get('/api/auth/signout');
-            console.log(response.data);
+            await axios.get('/api/auth/signout');
 
             // Show success message
             toast.success('Sign out successful!');
