@@ -15,6 +15,12 @@ export async function GET() {
             expires: new Date(0),
         });
 
+        // Remove user id from cookie
+        response.cookies.set('userId', '', {
+            httpOnly: true,
+            expires: new Date(0),
+        });
+
         // Return respones
         return response;
     } catch (error: any) {
