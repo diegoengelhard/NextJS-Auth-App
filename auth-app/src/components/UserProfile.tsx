@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation';
-import Link from "next/link";
 import axios from "axios";
 
 // Import toast
@@ -11,6 +10,8 @@ const UserProfile = () => {
     console.log(params.id);
 
     const router = useRouter()
+
+    // Set states
     const [data, setData] = useState({
         email: '',
         username: '',
@@ -19,6 +20,7 @@ const UserProfile = () => {
     });
     const [loading, setLoading] = useState(false);
 
+    // Fetch user data
     useEffect(() => {
         const fetchData = async () => {
           setLoading(true);
@@ -37,6 +39,24 @@ const UserProfile = () => {
       }
 
       // Handle Sign Out function
+    const handleSignOut = async () => {
+        try {
+            // Send POST request to API route
+            // const response = await axios.post('/api/auth/signout');
+            // console.log(response.data);
+
+            // Show success message
+            toast.success('Sign out successful!');
+
+            // Redirect to home page
+            setTimeout(() => {
+                router.push('/signin');
+            }, 2000);
+        } catch (error: any) {
+            // Log error
+            console.error(error);
+        }
+    }
 
 
     return (
@@ -85,7 +105,7 @@ const UserProfile = () => {
                             <button
                                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                 type="button"
-                                onClick={() => router.push('/')}
+                                onClick={handleSignOut}
                             >
                                 Logout
                             </button>

@@ -25,6 +25,8 @@ const SignIn = () => {
             // Send POST request to API route
             const response = await axios.post('/api/auth/signin', user);
             console.log(response.data);
+            console.log('token: ',response.data.token);
+            localStorage.setItem('token', response.data.token);
             const userId = response.data.user._id;
 
             // Set loading to false
@@ -33,7 +35,7 @@ const SignIn = () => {
             // Show success message
             toast.success('Sign in successful!');
 
-            // Redirect to dashboard
+            // Redirect to user's profile
             router.push(`/profile/${userId}`);
         } catch (error: any) {
             // Log error
