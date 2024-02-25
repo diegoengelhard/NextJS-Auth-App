@@ -56,6 +56,11 @@ export async function POST(request: NextRequest) {
             httpOnly: true,
         });
 
+        // Set user id in cookie
+        response.cookies.set('userId', user._id, {
+            httpOnly: true,
+        });
+
         // Return success message
         return response;
 

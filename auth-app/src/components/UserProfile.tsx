@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 
 const UserProfile = () => {
     const params = useParams();
-    console.log(params.id);
 
     const router = useRouter()
 
