@@ -33,6 +33,8 @@ const SignUp = () => {
             // Show success message
             toast.success('Sign up successful!');
 
+            toast.info('Email verification sent! Check your email to verify your account.');
+
             // Redirect to sign in page
             router.push('/signin');
         } catch (error: any) {

@@ -14,6 +14,16 @@ const jwtTools = {
     const payload: JwtPayload = { userId: _id };
     return jwt.sign(payload, TOKEN_SECRET, { expiresIn: TOKEN_EXPIRATION });
   },
+  // Verify token
+  verifyToken: (token: string): boolean => {
+    try {
+      jwt.verify(token, TOKEN_SECRET);
+      return true;
+    } catch (error) {
+      console.log('Invalid token: ', error);
+      return false;
+    }
+  }
 };
 
 export default jwtTools;

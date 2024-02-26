@@ -22,22 +22,22 @@ const UserProfile = () => {
     // Fetch user data
     useEffect(() => {
         const fetchData = async () => {
-          setLoading(true);
-          const res = await axios.get(`/api/profile/${params.id}`);
-          setData(res.data.user);
-          setLoading(false);
+            setLoading(true);
+            const res = await axios.get(`/api/profile/${params.id}`);
+            setData(res.data.user);
+            setLoading(false);
         };
-    
+
         fetchData();
-      }, [params.id]);
-    
-      if (loading) {
+    }, [params.id]);
+
+    if (loading) {
         return <div className='flex flex-col items-center justify-center min-h-screen py-2'>
             Loading...
         </div>;
-      }
+    }
 
-      // Handle Sign Out function
+    // Handle Sign Out function
     const handleSignOut = async () => {
         try {
             // Send GET request to API route
@@ -56,13 +56,23 @@ const UserProfile = () => {
         }
     }
 
+    const handleSendEmailVerify = async () => {
+        try {
+            await axios.post('/api/auth/sendemail', { email: data.email });
+            toast.success('Verification email sent!');
+        } catch (error: any) {
+            // Log error
+            console.error(error);
+            toast.error('Error sending verification email');
+        }
+    }
 
     return (
         <>
             <div className="flex flex-col items-center justify-center min-h-screen py-2">
                 <h1 className="text-5xl font-bold">User Profile</h1>
                 {/* Show user data */}
-                 <div className="w-full max-w-md mt-4">
+                <div className="w-full max-w-md mt-4">
                     <div className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4'>
                         <div className="my-4 flex" >
                             <div className="block text-gray-700 text-sm font-bold mb-2" >
@@ -84,6 +94,24 @@ const UserProfile = () => {
                         <hr />
                         <div className="my-4 flex">
                             <div className="block text-gray-700 text-sm font-bold mb-2" >
+                                Verified Status:&nbsp;
+                            </div>
+                            <div className="block text-gray-700 text-sm mb-2" >
+                                {data.isVerified ? 'Yes' : (
+                                    <>
+                                        No&nbsp;
+                                        <p
+                                            className="text-black hover:text-blue-500 underline cursor-pointer"
+                                            onClick={handleSendEmailVerify}
+                                        >
+                                            Verify email here
+                                        </p>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                        <div className="my-4 flex">
+                            <div className="block text-gray-700 text-sm font-bold mb-2" >
                                 Admin Status:&nbsp;
                             </div>
                             <div className="block text-gray-700 text-sm mb-2" >
@@ -91,14 +119,6 @@ const UserProfile = () => {
                             </div>
                         </div>
                         <hr />
-                        <div className="my-4 flex">
-                            <div className="block text-gray-700 text-sm font-bold mb-2" >
-                                Verified Status:&nbsp;
-                            </div>
-                            <div className="block text-gray-700 text-sm mb-2" >
-                                {data.isVerified ? 'Yes' : 'No'}
-                            </div>
-                        </div>
                         <div className="flex items-center justify-between">
                             <button
                                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -109,7 +129,7 @@ const UserProfile = () => {
                             </button>
                         </div>
                     </div>
-                 </div>
+                </div>
 
             </div>
         </>
