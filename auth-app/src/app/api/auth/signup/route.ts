@@ -7,6 +7,9 @@ import User from '../../../../models/User.model';
 // Import bycrypt
 import bcryptjs from 'bcryptjs';
 
+// Import sendEmail from helpers
+import { sendEmail } from '../../../../helpers/mailer';
+
 import { NextRequest, NextResponse } from 'next/server';
 
 // Connect to MongoDB
@@ -42,6 +45,9 @@ export async function POST(request: NextRequest) {
 
         // Log new user
         console.log('New user created:', newUser);
+
+        // Send email verification
+        await sendEmail({ email, emailType: "VERIFY", userId: newUser._id });
 
         // Return success message
         return NextResponse.json({ message: 'User created', user: newUser }, { status: 201 });
