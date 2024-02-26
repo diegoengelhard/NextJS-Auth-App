@@ -98,7 +98,7 @@ const UserProfile = () => {
                             </div>
                             <div className="block text-gray-700 text-sm mb-2" >
                                 {data.isVerified ? 'Yes' : (
-                                    <>
+                                    <span className='flex'>
                                         No&nbsp;
                                         <p
                                             className="text-black hover:text-blue-500 underline cursor-pointer"
@@ -106,10 +106,11 @@ const UserProfile = () => {
                                         >
                                             Verify email here
                                         </p>
-                                    </>
+                                    </span>
                                 )}
                             </div>
                         </div>
+                        <hr />
                         <div className="my-4 flex">
                             <div className="block text-gray-700 text-sm font-bold mb-2" >
                                 Admin Status:&nbsp;
@@ -118,7 +119,6 @@ const UserProfile = () => {
                                 {data.isAdmin ? 'Yes' : 'No'}
                             </div>
                         </div>
-                        <hr />
                         <div className="flex items-center justify-between">
                             <button
                                 className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
