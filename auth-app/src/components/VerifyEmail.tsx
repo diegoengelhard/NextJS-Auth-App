@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 // verify token function
 import jwtTools from "../utils/jwt.tools";
@@ -14,16 +15,20 @@ const VerifyEmail = () => {
     const [token, setToken] = useState("");
     const [verified, setVerified] = useState(false);
     const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     // Verify email function
     const verifyUserEmail = async () => {
         try {
+            setLoading(true);
             await axios.post('/api/auth/verifyemail', { token })
             setVerified(true);
+            setLoading(false);
         } catch (error: any) {
             setError(true);
             setVerified(false);
             console.log(error);
+            toast.error('Email verification failed');
         }
     }
 
@@ -34,11 +39,6 @@ const VerifyEmail = () => {
         setToken(urlToken || "");
     }, []);
 
-    // Verify token is a valid token
-    const isValidToken = () => {
-        return jwtTools.verifyToken(token);
-    }
-
     // Use effect to verify user email
     useEffect(() => {
         if (token.length > 0) {
@@ -46,6 +46,12 @@ const VerifyEmail = () => {
             setError(false);
         }
     }, [token]);
+
+    if (loading) {
+        return <div className='flex flex-col items-center justify-center min-h-screen py-2'>
+            Loading...
+        </div>;
+    }
 
     return (
         <>
@@ -63,7 +69,7 @@ const VerifyEmail = () => {
                             </div>
                         ) : (
                             <div className="flex flex-col items-center justify-center">
-                                <FontAwesomeIcon icon={faCircleXmark} style={{color: "#f20256",}} size="5x"/>
+                                <FontAwesomeIcon icon={faCircleXmark} style={{ color: "#f20256", }} size="5x" />
                                 <h1 className="text-5xl text-black my-4">Email Verification</h1>
                                 <p className="text-gray-600 my-2">Your email was not verified.</p>
                                 <Link href="/signin">
