@@ -9,7 +9,15 @@ connect();
 export async function POST(request: NextRequest) {
     try {
         // obtain token from the request
-        const { token } = await request.json();
+        const { token, userId } = await request.json();
+
+        // find user via id
+        const isValidUser = await User.findById(userId);
+
+        // check if user is already verified and send success message
+        if (isValidUser.isVerified) {
+            return NextResponse.json({ message: 'Email already verified', user: isValidUser }, { status: 200 });
+        }
 
         // find the user with the token
         const user = await User.findOne(

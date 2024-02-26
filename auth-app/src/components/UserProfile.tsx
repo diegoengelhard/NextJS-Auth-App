@@ -31,12 +31,6 @@ const UserProfile = () => {
         fetchData();
     }, [params.id]);
 
-    if (loading) {
-        return <div className='flex flex-col items-center justify-center min-h-screen py-2'>
-            Loading...
-        </div>;
-    }
-
     // Handle Sign Out function
     const handleSignOut = async () => {
         try {
@@ -65,6 +59,12 @@ const UserProfile = () => {
             console.error(error);
             toast.error('Error sending verification email');
         }
+    }
+
+    if (loading) {
+        return <div className='flex flex-col items-center justify-center min-h-screen py-2'>
+            Loading...
+        </div>;
     }
 
     return (

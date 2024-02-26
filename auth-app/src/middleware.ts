@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest, response: NextResponse) {
     const path = request.nextUrl.pathname;
-    const publicPath = path === '/signin' || path === '/signup' || path === '/verifyemail';
+    const publicPath = path === '/signin' || path === '/signup';
 
     // // Get the token from the request cookies
     const token = request.cookies.get('token')?.value || '';
