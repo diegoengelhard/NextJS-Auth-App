@@ -12,7 +12,7 @@ connect();
 export async function POST(request: NextRequest) {
     try {
         // Get user data from request body
-        const { email } = await request.json();
+        const { email, emailType } = await request.json();
 
         // Check if user already exists
         const user = await User.findOne({ email });
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
         }
 
         // Send email verification
-        await sendEmail({ email, emailType: "VERIFY", userId: user._id });
+        await sendEmail({ email, emailType, userId: user._id });
 
         // Return success message
         return NextResponse.json({ message: 'Email sent' }, { status: 200 });

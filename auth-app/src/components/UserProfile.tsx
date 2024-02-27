@@ -52,7 +52,7 @@ const UserProfile = () => {
 
     const handleSendEmailVerify = async () => {
         try {
-            await axios.post('/api/auth/sendemail', { email: data.email });
+            await axios.post('/api/auth/sendemail', { email: data.email, emailType: 'VERIFY'});
             toast.success('Verification email sent!');
         } catch (error: any) {
             // Log error

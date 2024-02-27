@@ -85,7 +85,11 @@ const SignIn = () => {
                             >
                                 {loading ? 'Loading...' : 'Sign In'}
                             </button>
-                            <Link href="/forgotpassword" className='text-black'>Forgot Password?</Link>
+                            <Link href="/forgotpassword" 
+                                className='text-black'
+                                >
+                                Forgot Password?
+                            </Link>
                         </div>
                     </form>
                     <Link href="/signup">Visit sign up page</Link>
